@@ -1,66 +1,212 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requisitos Previos
 
-## About Laravel
+- **PHP** >= 8.0
+- **Composer**
+- **Laravel Framework** (versión utilizada en el proyecto)
+- **Base de datos**: MySQL u otra compatible con Laravel
+- **Extensiones de PHP** requeridas por Laravel
+- **Git** (para clonar el repositorio)
+- **Node.js y NPM** (opcional, si utilizas Laravel Mix para assets front-end)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalación
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Clonar el repositorio
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+```bash
+git clone https://github.com/tu_usuario/mi_proyecto.git cd mi_proyecto
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Instalar dependencias de Composer
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+`composer install`
+```
 
-## Laravel Sponsors
+### 3. Copiar el archivo de entorno y configurar
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+```bash
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- Edita el archivo `.env` y configura los detalles de tu base de datos y otras variables de entorno necesarias.
 
-## Contributing
+### 4. Generar la clave de la aplicación
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+bash
 
-## Code of Conduct
+Copy code
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`php artisan key:generate`
 
-## Security Vulnerabilities
+### 5. Ejecutar migraciones y seeders
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+bash
 
-## License
+Copy code
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+`php artisan migrate --seed`
+
+- Esto creará las tablas necesarias y, opcionalmente, insertará datos iniciales.
+
+### 6. Instalar dependencias de NPM (opcional)
+
+Si tu proyecto utiliza assets front-end:
+
+
+
+```bash
+npm install npm run dev
+```
+
+## Estructura del Proyecto
+
+El proyecto sigue la Arquitectura Hexagonal y está organizado en las siguientes capas:
+
+```bash
+/src
+├── Application
+│   ├── Application.php                // Implementación de ApplicationInterface
+│   ├── Commands                       // Objetos de comando (DTOs)
+│   ├── Services                       // Servicios de aplicación (casos de uso)
+│   └── Interfaces
+│       └── ApplicationInterface.php   // Interfaz que define los casos de uso
+├── Domain
+│   ├── Entities                       // Entidades de dominio (Ebook, Order)
+│   ├── Repositories                   // Interfaces de repositorios (puertos de salida)
+│   └── ValueObjects                   // Objetos de valor (OrderId, EbookId)
+├── Infrastructure
+│   ├── Http
+│   │   ├── Controllers                // Controladores HTTP (adaptadores de entrada)
+│   │   └── Requests                   // Validaciones de solicitudes HTTP
+│   ├── Persistence
+│   │   ├── Models                     // Modelos Eloquent
+│   │   ├── Repositories               // Implementaciones de repositorios (adaptadores de salida)
+│   │   └── InMemory                   // Repositorios en memoria para pruebas
+│   └── Console
+│       └── Commands                   // Comandos de consola
+└── Providers
+    └── AppServiceProvider.php         // Registro de dependencias e inyección
+
+```
+
+
+- **Application**: Contiene la lógica de aplicación y los casos de uso.
+- **Domain**: Contiene las entidades de dominio y las reglas de negocio.
+- **Infrastructure**: Contiene los detalles de infraestructura, como controladores, repositorios y modelos.
+
+## Uso
+
+### Ejecutar el servidor de desarrollo
+
+
+```bash
+php artisan serve
+```
+
+
+El servidor estará disponible en `http://localhost:8000`.
+
+### Rutas Disponibles
+
+#### 1. Listar libros electrónicos disponibles
+
+- **Método**: GET
+- **URL**: `/api/ebooks`
+- **Descripción**: Obtiene una lista de libros electrónicos disponibles.
+
+**Ejemplo de solicitud:**
+
+```bash
+curl -X GET http://localhost:8000/api/ebooks
+```
+
+**Respuesta esperada:**
+
+```bash
+[
+  {
+    "id": 1,
+    "title": "Aprendiendo Laravel",
+    "author": "Juan Pérez",
+    "price": 19.99,
+    "available": true
+  },
+  {
+    "id": 2,
+    "title": "Arquitectura Hexagonal en PHP",
+    "author": "María López",
+    "price": 24.99,
+    "available": true
+  }
+]
+
+```
+#### 2. Crear un pedido
+
+- **Método**: POST
+- **URL**: `/api/orders`
+- **Descripción**: Crea un nuevo pedido de un libro electrónico.
+
+**Parámetros requeridos:**
+
+- `ebook_id` (int): ID del libro electrónico.
+- `quantity` (int): Cantidad a comprar.
+- `email` (string): Correo electrónico del cliente.
+
+**Ejemplo de solicitud:**
+
+
+```bash
+curl -X POST http://localhost:8000/api/orders \
+     -H 'Content-Type: application/json' \
+     -d '{
+           "ebook_id": 1,
+           "quantity": 2,
+           "email": "cliente@example.com"
+         }'
+
+```
+**Respuesta esperada:**
+
+```bash
+{   "order_id": 1 }
+`````
+
+### Nota
+
+- Asegúrate de tener libros electrónicos disponibles en tu base de datos antes de realizar pedidos.
+- Puedes usar seeders para insertar datos de ejemplo.
+
+## Pruebas
+
+### Ejecutar pruebas unitarias
+
+El proyecto incluye pruebas unitarias utilizando PHPUnit. Para ejecutar las pruebas:
+
+
+```bash
+php artisan test
+```
+
+### Configuración de pruebas
+
+- Los repositorios en memoria se utilizan durante las pruebas para evitar dependencias en la base de datos.
+- Las dependencias se inyectan utilizando el contenedor de Laravel y se configuran en los casos de prueba.
+
+**Ejemplo de configuración en pruebas:**
+
+```bash
+protected function setUp(): void
+{
+    parent::setUp();
+
+    $this->app->bind(EbookRepository::class, InMemoryEbookRepository::class);
+    $this->app->bind(OrderRepository::class, InMemoryOrderRepository::class);
+}
+
+```
+
