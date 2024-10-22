@@ -12,14 +12,14 @@
 
 
 ```bash
-git clone https://github.com/tu_usuario/mi_proyecto.git cd mi_proyecto
+git clone https://github.com/tu_usuario/mi_project.git cd mi_project
 ```
 
 ### 2. Instalar dependencias de Composer
 
 
 ```bash
-`composer install`
+composer install
 ```
 
 ### 3. Copiar el archivo de entorno y configurar
@@ -33,19 +33,16 @@ cp .env.example .env
 
 ### 4. Generar la clave de la aplicación
 
-bash
-
-Copy code
-
-`php artisan key:generate`
+```bash
+php artisan key:generate
+```
 
 ### 5. Ejecutar migraciones y seeders
 
-bash
+```bash
+php artisan migrate --seed
+```
 
-Copy code
-
-`php artisan migrate --seed`
 
 - Esto creará las tablas necesarias y, opcionalmente, insertará datos iniciales.
 
