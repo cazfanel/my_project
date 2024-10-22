@@ -3,11 +3,8 @@
 
 - **PHP** >= 8.0
 - **Composer**
-- **Laravel Framework** (versión utilizada en el proyecto)
-- **Base de datos**: MySQL u otra compatible con Laravel
-- **Extensiones de PHP** requeridas por Laravel
-- **Git** (para clonar el repositorio)
-- **Node.js y NPM** (opcional, si utilizas Laravel Mix para assets front-end)
+- **Laravel Framework** (v10)
+- **Base de datos**: MySQL 
 
 ## Instalación
 
