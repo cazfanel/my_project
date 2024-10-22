@@ -30,6 +30,6 @@ final class EbookOrderService
         // Guardamos la orden utilizando el repositorio
         $this->orderRepository->save($order);
 
-        return $order->getOrderId();
+        return $order->getId();
     }
 }

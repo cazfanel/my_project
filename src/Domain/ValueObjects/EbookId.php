@@ -4,30 +4,22 @@ declare(strict_types=1);
 
 namespace Src\Domain\ValueObjects;
 
-use Ramsey\Uuid\Uuid;
-
 final class EbookId
 {
-    private string $id;
+    private int $id;
 
-    public function __construct(?string $id = null)
+    public function __construct(int $id = 0)
     {
-        $this->id = $id ?? Uuid::uuid4()->toString();
+        $this->id = $id;
     }
 
-    public function asString(): string
-    {
-        return $this->id;
-    }
-
-    // Métodos mágicos para facilitar comparaciones
-    public function __toString(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     public function equals(EbookId $other): bool
     {
-        return $this->id === $other->asString();
+        return $this->id === $other->getId();
     }
 }

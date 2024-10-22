@@ -37,6 +37,22 @@ class InMemoryEbookRepository implements EbookRepository
      */
     public function findAllAvailable(): array
     {
+        $ebook1 = new Ebook(
+            new EbookId(1),
+        'Título de Prueba',
+        'Autor de Prueba',
+        9.99,
+        true
+        );
+        $ebook2 = new Ebook(
+            new EbookId(2),
+            'Título de Prueba 2',
+            'Autor de Prueba 2',
+            8.99,
+            true
+        );
+        $this->ebooks[] = $ebook1;
+        $this->ebooks[] = $ebook2;
         return array_filter($this->ebooks, function (Ebook $ebook) {
             return $ebook->isAvailable();
         });
